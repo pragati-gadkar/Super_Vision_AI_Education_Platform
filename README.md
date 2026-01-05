@@ -68,4 +68,4 @@ Super Vision is a professional-grade, real-time AI monitoring system designed fo
 ---
 
 ## Author
-Builded by **Pragati Gadkar**
+Built by **Pragati Gadkar**

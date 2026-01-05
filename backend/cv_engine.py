@@ -70,7 +70,7 @@ class CVEngine:
         
         telemetry["confusion_level"] = confusion_level
 
-        # 3. Excitemnt / Happy
+        # 3. Excitement / Happy
         is_happy = self._check_happy(landmarks)
         if is_happy and not is_confused:
             telemetry["status"] = "Happy/Excited"
