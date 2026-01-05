@@ -197,10 +197,11 @@ export default function StudentPortal() {
                         </motion.div>
                     </div>
                 </div>
-                <footer className="relative z-10 max-w-7xl mx-auto px-6 pb-8 border-t border-white/5 mt-12 pt-8 flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-500">
-                    <p>© 2026 Super Vision AI</p>
-                    <p>Builded by <span className="text-emerald-400">Pragati Gadkar</span></p>
-                </footer>
+            </main>
+            <footer className="relative z-10 max-w-7xl mx-auto px-6 pb-8 border-t border-white/5 mt-12 pt-8 flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-500">
+                <p>© 2026 Super Vision AI</p>
+                <p>Builded by <span className="text-emerald-400">Pragati Gadkar</span></p>
+            </footer>
         </div>
     );
 }
