@@ -155,13 +155,14 @@ export default function TeacherDashboard() {
                 </div>
 
                 <div className="pt-8 mt-auto border-t border-white/5">
-                    <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 mb-4">
                         <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-100 font-black border border-white/10">ABC</div>
                         <div>
                             <p className="text-sm font-black text-white uppercase tracking-tighter">Prof. ABC</p>
                             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Physics 101 • Session Live</p>
                         </div>
                     </div>
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-600 text-center">Builded by <span className="text-blue-500">Pragati Gadkar</span></p>
                 </div>
             </aside>
 
