@@ -93,28 +93,40 @@ class CVEngine:
         return False
 
     def _check_confusion(self, landmarks):
-        # Logic: Brow furrowing + lack of smile
-        # Inner brows: 55, 285. Nose bridge: 168
-        # Distance between inner brows
+        # 1. Furrowed Brows (Inner brows drawn inward)
+        # Landmarks: 55, 285
         d_brows = abs(landmarks[55].x - landmarks[285].x)
-        # Mouth corners: 61, 291
-        d_mouth = abs(landmarks[61].x - landmarks[291].x)
+        is_furrowed = d_brows < 0.045
         
-        # Heuristic values (need calibration)
-        is_furrowed = d_brows < 0.05 
-        is_smiling = d_mouth > 0.08
-        
-        # Head tilt (Roll)
-        # Left eye: 33, Right eye: 263
+        # 2. Narrowed Eyes (Eye Aspect Ratio - EAR)
+        # Left Eye: 159, 145 (Vertical) / 33, 133 (Horizontal)
+        left_ear = abs(landmarks[159].y - landmarks[145].y) / abs(landmarks[33].x - landmarks[133].x)
+        is_narrowed = left_ear < 0.22  # Squinting indicator
+
+        # 3. Tilted Head (Roll)
+        # Landmarks: 33, 263 (Eyes level)
         eye_diff_y = abs(landmarks[33].y - landmarks[263].y)
-        is_tilted = eye_diff_y > 0.03
+        is_tilted = eye_diff_y > 0.035
 
+        # 4. Tense Mouth (Frown or thin line)
+        # Mouth corners: 61, 291. Vertical opening: 13, 14
+        d_mouth_width = abs(landmarks[61].x - landmarks[291].x)
+        d_mouth_height = abs(landmarks[13].y - landmarks[14].y)
+        
+        # A tense mouth is wide but very thin
+        is_tense_mouth = (d_mouth_width < 0.07) or (d_mouth_height < 0.01)
+        is_smiling = d_mouth_width > 0.085
+
+        # Refined Scoring System
         confusion_score = 0
-        if is_furrowed: confusion_score += 0.6
-        if is_tilted: confusion_score += 0.4
-        if is_smiling: confusion_score -= 0.5
+        if is_furrowed: confusion_score += 0.5   # Most common sign
+        if is_narrowed: confusion_score += 0.3   # Intense focus
+        if is_tilted: confusion_score += 0.3     # Processing angle
+        if is_tense_mouth: confusion_score += 0.2 # Frustration signal
+        
+        if is_smiling: confusion_score -= 0.6    # Reliability buffer
 
-        return confusion_score > 0.5, max(0, confusion_score)
+        return confusion_score > 0.6, max(0, min(1.0, confusion_score))
 
     def _check_happy(self, landmarks):
         # Distance between lip corners and height of lips
